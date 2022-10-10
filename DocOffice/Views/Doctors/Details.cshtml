@@ -1,0 +1,27 @@
+@{
+	Layout = "_Layout";
+}
+
+@using DocOffice.Models;
+
+<h3>Details on @Model.Name</h3>
+
+<p>Specialty: @Model.Specialty</p>
+
+@if (Model.JoinEntities.Count == 0)
+{
+	<p>This Doc has no patients (or friends :'( )</p>
+}
+
+<ul>
+	@foreach (var join in Model.JoinEntities)
+	{
+		<li>@Html.ActionLink($"{join.Name}", "Details", "Patients", new { id = join.PatientId})</li>
+	}
+</ul>
+
+<p>@Html.ActionLink("Create a Patient Profile", "Create", "Patients")</p>
+<p>@Html.ActionLink("Create a Doc Profile", "Create")</p>
+<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
+<p>@Html.ActionLink("See All Doctors", "Index")</p>
+<p>@Html.ActionLink("Return Home", "Index", "Home")</p>

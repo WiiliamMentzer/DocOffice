@@ -28,7 +28,7 @@ namespace DocOffice.Controllers
     [HttpPost]
     public ActionResult Create(Doctor doctor)
     {
-      _db.Doctor.Add(doctor);
+      _db.Doctors.Add(doctor);
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
