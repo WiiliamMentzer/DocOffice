@@ -20,10 +20,18 @@ else
   @foreach(var join in Model.JoinEntities)
   {
     <li>@join.Doctor.Name</li>
-    @* @using (Html.BeginForm)
+    @using (Html.BeginForm("DeleteDoctor", "Patients"))
     {
-
-    } *@
+      @Html.Hidden("joinId", @join.DoctorPatientId)
+      <input type="submit" value="Delete"/>
+    }
   }
   </ul>
 }
+
+<p>@Html.ActionLink("Edit a Patients Info", "Edit", new { id = Model.PatientId })</p>
+<p>@Html.ActionLink("Delete this Patient's Info", "Delete", new { id = Model.PatientId })</p>
+<p>@Html.ActionLink("Assign a Doctor to the Patient.", "AddDoctor", new { id = Model.PatientId })</p>
+<p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
+<p>@Html.ActionLink("See All Doctors", "Index")</p>
+<p>@Html.ActionLink("Return Home", "Index", "Home")</p>

@@ -6,7 +6,22 @@
 
 <h3>Details on @Model.Name</h3>
 
-<p>Specialty: @Model.Specialty</p>
+@if (Model.JoinEntSpec.Count == 0)
+{
+	<p>This Doctor has no specialties!</p> 
+}
+
+<ul>
+	@foreach(var join in Model.JoinEntSpec)
+	{
+		<li>@Html.ActionLink($"{join.Specialty.Name}", "Details", "Specialties", new { id = join.Specialty.SpecialtyId})</li>
+    @using (Html.BeginForm("DeleteSpecialty", "Doctors"))
+    {
+      @Html.Hidden("joinId", @join.DoctorSpecialtyId)
+      <input type="submit" value="Delete"/>
+    }
+	}
+</ul>
 
 @if (Model.JoinEntities.Count == 0)
 {
@@ -16,12 +31,15 @@
 <ul>
 	@foreach (var join in Model.JoinEntities)
 	{
-		<li>@Html.ActionLink($"{join.Name}", "Details", "Patients", new { id = join.PatientId})</li>
+		<li>@Html.ActionLink($"{join.Patient.Name}", "Details", "Patients", new { id = join.Patient.PatientId})</li>
 	}
 </ul>
 
+<p>@Html.ActionLink("Add a Specialty to this Doctor", "AddSpecialty", new {id = Model.DoctorId })</p>
 <p>@Html.ActionLink("Create a Patient Profile", "Create", "Patients")</p>
 <p>@Html.ActionLink("Create a Doc Profile", "Create")</p>
+<p>@Html.ActionLink("Edit this Doctor's Info", "Edit", new { id = Model.DoctorId })</p>
+<p>@Html.ActionLink("Delete this Doctor", "Delete", new { id = Model.DoctorId })</p>
 <p>@Html.ActionLink("See All Patients", "Index", "Patients")</p>
 <p>@Html.ActionLink("See All Doctors", "Index")</p>
 <p>@Html.ActionLink("Return Home", "Index", "Home")</p>
